@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+</head>
+<body>
+    <hr>
+    <a href="students.html">students</a>
+    <hr>
+    <form>
+    <h2>login here</h2>
+    <form action="/register" method="post">
+        <label>username :</label>
+        <input type="text" placeholder="enter username" required>
+        <br><br>
+        <label>email :</label>
+        <input type="email" placeholder="enter email"required>
+        <br><br>
+        <label>password :</label>
+        <input type="passsword"placeholder="enter password"required>
+        <br><br>
+        <label>phone_no :</label>
+        <input type="Phone_no"placeholder="enter Phone_no"required>
+        <br><br>
+        <label>address :</label>
+        <textarea rows="5"cols="5">
+            enter address
+        </textarea>
+        <br><br>
+        <label>DOB</label>
+        <input type="date">
+        <br><br>
+        <label>resume</label>
+        <input type="file">
+        <br><br>
+        <label>gender :</label>
+        <input type="radio"name="gen"value="m">male
+        <input type="radio"name="gen"value="f">female
+        <input type="radio"name="gen"value="o">other
+        <br><br>
+    </form>
+<h2>Response</h2>
+<pre id="response"></pre>
+
+<script>
+    document.getElementById('studentForm').addEventListener('submit', async function(event) {
+        event.preventDefault(); 
+        const name = document.getElementById('name').value;
+        const age = document.getElementById('age').value;
+        const major = document.getElementById('major').value;
+        const student = {
+            name: name,
+            age: age,
+            major: major
+        };
+
+        try {
+            const response = await fetch('http://localhost:1337/api/students', { 
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(student)
+            });
+            const responseData = await response.json();
+            document.getElementById('response').textContent = JSON.stringify(responseData, null, 2);
+        } catch (error) {
+            document.getElementById('response').textContent = 'Error: ' + error.message;
+        }
+    });
+</script>
+        <lable>i agree to above info</lable>
+        <input type="checkbox"><br><br>
+        <br><br>
+        <input type="submit"value="login">
+        
+    </form>
+    
+</body>
+</html>
